@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f0eee6">
+<title>桃花源 · 一程山水</title><meta name="description" content="沿溪入谷，穿过桃林。一个依《桃花源记》意境营造、可以自由漫游的三维山水世界。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23eee9df'/%3E%3Ctext x='8' y='35' font-size='31' fill='%23536149'%3E桃%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main id="experience" aria-label="桃花源三维交互场景">
+<canvas id="scene" aria-label="拖动观察景色，滚轮调整距离，按 W A S D 漫游"></canvas>
+<div class="vignette"></div><div class="paper-wash" id="paper-wash"></div>
+<header>
+<a class="brand" href="./" aria-label="桃花源首页"><span class="brand-mark">源</span><span class="brand-name">桃花源<small>THE HIDDEN VALLEY</small></span></a>
+<div class="top-tools"><span class="live-label"><i></i> 此刻，春正好</span><button id="sound" class="circle" title="开启自然环境音" aria-label="开启自然环境音" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4m12-2c2 2 2 6 0 8m3-11c4 4 4 10 0 14"/></svg></button><button id="fullscreen" class="circle" title="全屏沉浸" aria-label="全屏沉浸"><svg viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m8 0h4v-4"/></svg></button><button id="help" class="circle" title="操作指南" aria-label="操作指南"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M10 9c0-3 5-3 5 0 0 2-3 2-3 4m0 3h.01"/></svg></button></div>
+</header>
+<section class="intro" id="intro"><div class="eyebrow"><span></span>循溪而行 · 误入春深</div><h1>山水有境，<br>心自桃源。</h1><p>忘路之远近，忽逢桃花林。<br>在一溪春水之间，寻一处久违的宁静。</p><button id="enter" class="enter">入境漫游 <span>↗</span></button><div class="intro-foot"><span>可交互的三维山水</span><i></i><span>依《桃花源记》意境营造</span></div></section>
+<div class="scene-label"><span class="label-line"></span><span id="scene-label-text">远山含黛 · 桃溪映春</span></div>
+<aside class="map-panel" id="map-panel"><div class="map-title"><span>桃源舆图</span><button id="map-collapse" aria-label="收起舆图">−</button></div><canvas id="map" width="336" height="270" aria-label="桃源游览地图"></canvas><div class="map-caption"><i></i><span>你的所在</span><span class="north">N ↑</span></div></aside>
+<button class="map-expand circle" id="map-expand" aria-label="展开舆图" hidden><svg viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16"/></svg></button>
+<div id="hotspots"></div>
+<section class="place-card" id="place-card"><span class="place-index" id="place-index">01</span><div><div class="place-overline">此间 · 桃源</div><h2 id="place-title">桃溪初见</h2><p id="place-desc">芳草鲜美，落英缤纷。</p></div><button id="close-card" aria-label="关闭地点介绍">×</button></section>
+<footer>
+<div class="footer-meta"><span class="vertical-mark">境</span><span>一程山水，一日闲心<small>TAOHUAYUAN · IMMERSIVE EXPERIENCE</small></span></div>
+<nav class="route" aria-label="游览地点"><button class="route-stop active" data-place="0"><span class="stop-num">01</span>桃溪初见</button><span class="route-line"></span><button class="route-stop" data-place="1"><span class="stop-num">02</span>十里桃林</button><span class="route-line"></span><button class="route-stop" data-place="2"><span class="stop-num">03</span>烟火人家</button><span class="route-line"></span><button class="route-stop" data-place="3"><span class="stop-num">04</span>溪上石桥</button></nav>
+<div class="time-control"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1 1m12 12 1 1M5 19l1-1M18 6l1-1"/></svg><button id="time-button" title="切换清晨、午后与暮色">清晨 <span>⌃</span></button><div class="time-menu" id="time-menu" hidden><button data-time="0" class="chosen">清晨 <small>薄雾初晴</small></button><button data-time="1">午后 <small>春日和光</small></button><button data-time="2">暮色 <small>夕照归林</small></button></div></div>
+</footer>
+<div class="bottom-hint" id="bottom-hint"><span>拖动环顾</span><b>·</b><span>滚轮远近</span><b>·</b><span>W A S D 行走</span><button id="walk-toggle">自由行走 <span>↗</span></button></div>
+<div class="walk-hud" id="walk-hud" hidden><span><i></i> 自由漫游中</span><span>W A S D 移动 · 按住 Shift 快行 · 拖动转向</span><button id="exit-walk">结束漫游 <kbd>Esc</kbd></button></div>
+<div class="joystick" id="joystick" hidden><div id="joystick-knob"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="loading" id="loading"><div class="loading-seal">源</div><p>一溪春水，正为你而来</p><div class="loading-track"><i></i></div><small id="load-detail">正在铺陈山水…</small></div>
+<div class="dialog-backdrop" id="help-dialog" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="help-title"><button id="close-help" aria-label="关闭操作指南">×</button><span class="eyebrow">自在游 · 慢慢看</span><h2 id="help-title">把脚步，交给山水。</h2><dl><div><dt>环顾四周</dt><dd>按住鼠标拖动，或单指滑动</dd></div><div><dt>远近之间</dt><dd>滚动鼠标滚轮，或双指缩放</dd></div><div><dt>自由漫游</dt><dd>点击「入境漫游」，用 W A S D 或方向键行走</dd></div><div><dt>随心入境</dt><dd>点击下方地点，沿溪寻访桃源</dd></div><div><dt>听见自然</dt><dd>点击右上角声音按钮，开启溪流与鸟鸣</dd></div></dl><p>此为文学意境的三维演绎，山川村落均可实时环顾。</p></section></div>
+<noscript>请启用 JavaScript 以进入桃花源三维场景。</noscript>
+</main>
+<script type="module" src="./main.js"></script>
+</body></html>
